@@ -1,0 +1,26 @@
+body
+{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #F4EDD3;
+}
+
+.background
+{
+    background-color: #4C585B;
+    border: solid #4C585B 4px ;
+}
+
+.board
+{
+    display: grid;
+    grid-template-columns: repeat(10,80px);
+    grid-template-rows: repeat(10,80px);
+    gap: 4px;
+}
+
+.cell
+{
+    background-color: #A5BFCC;
+}
