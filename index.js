@@ -13,3 +13,10 @@ for(let i = 1; i < 11; i++)
         board.appendChild(cell);
     }
 }
+
+let cellTwo = document.createElement("div");
+
+cellTwo.classList.add("cellTwo");
+cellTwo.style.gridColumn = 5;
+cellTwo.style.gridRow = 5;
+board.appendChild(cellTwo);
