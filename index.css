@@ -30,4 +30,7 @@ body
 .cellTwo
 {   
     background-color: #72848d;
+    text-align: center;
+    font-size: 70px;
+    color: rgba(255, 255, 255);
 }
