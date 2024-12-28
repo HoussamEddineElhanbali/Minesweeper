@@ -25,6 +25,7 @@ body
     background-color: #A5BFCC;
     box-shadow: inset -6px -6px 0 rgba(0, 0, 0, 0.2),
     inset 6px 6px 0 rgba(255, 255, 255);
+    font-size: 70px;
 }
 
 .cellTwo
