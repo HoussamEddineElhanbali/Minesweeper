@@ -94,6 +94,7 @@ function generateSurroundingNumbers()
 function detectClick(event)
 {
     event.target.className = "cellTwo";
+    
 }
 
 
