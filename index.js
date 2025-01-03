@@ -2,42 +2,53 @@
 
 let board = document.querySelector(".board");
 let gridBoard = [];
-let difficulty = 6;
+let difficulty = 10;
 let bombs = [];
+let cellElements = [];
 let surroundingPattern = [
-    [-1,-1],[-1,0],[-1,1]
-    ,[0,-1],        [0,1]
-    ,[1,-1],[1,0],[1,1]
+    [-1,-1],[0,-1],[1,-1]
+    ,[-1,0],        [1,0]
+    ,[-1,1],[0,1],[1,1]
 ];
 
-function intialize()
+//initialize the game
+function intializeBoard()
 {
-    for(let i = 1; i < 11; i++)
+    for(let i = 0; i < 10; i++)
         {
-            for(let j = 1; j < 11; j++)
+            let rows = [];
+
+            for(let j = 0; j < 10; j++)
             {
                 let cell = document.createElement("div");
                 cell.classList.add("cell");
-                cell.style.gridColumn = i;
-                cell.style.gridRow = j;
+                cell.style.gridColumn = j + 1;
+                cell.style.gridRow = i + 1;
+                cell.dataset.column = j;
+                cell.dataset.row = i;
                 cell.addEventListener("click", detectClick);
+                rows.push(cell);
                 board.appendChild(cell);
             }
+
+            cellElements.push(rows);
         }
 
+    //filling gridboard with 0
     for(let i = 0; i < 10; i++)
         {
-            let column = [];
+            let collumn = [];
         
             for(let j = 0; j < 10; j++)
             {
-                column.push(0);
+                collumn.push(0);
             }
         
-            gridBoard.push(column);
+            gridBoard.push(collumn);
         }
 }
 
+//generate bomb positions
 function generateBombs()
 {
     for(let i = 0; i < difficulty; i++)
@@ -49,18 +60,21 @@ function generateBombs()
             bomb[0] = Math.floor(Math.random() * 10);
             bomb[1] = Math.floor(Math.random() * 10);
         }
-        while(checkDuplicates(bomb));
+        while(isBombDuplicated(bomb));
 
-        bombs.push([bomb[0],bomb[1]]);
+        bombs.push([bomb[1],bomb[0]]);
     }
 
+    //adding bombs to the grid
     bombs.forEach(Element => 
     {
-        gridBoard[Element[0]][Element[1]] = -1;
+        gridBoard[Element[1]][Element[0]] = -1;
     });
 }
 
-function checkDuplicates(bomb)
+
+//check if a bomb position is duplicated
+function isBombDuplicated(bomb)
 {
     for(let i = 0; i < bombs.length; i++)
     {
@@ -72,57 +86,75 @@ function checkDuplicates(bomb)
     return false;
 }
 
-function generateSurroundingNumbers()
+//calculate numbers indicating bomb Surrounding
+function calculateSurroundingNumbers()
 {
-    bombs.forEach(Element => 
+    bombs.forEach(bomb => 
     {
         surroundingPattern.forEach(pattern => 
         {
-            let collumn = Element[0] + pattern[0];
-            let row = Element[1] + pattern[1];
+            let collumn = bomb[0] + pattern[0];
+            let row = bomb[1] + pattern[1];
             if( collumn >= 0 && collumn < 10 && row >= 0 && row < 10)
             {
-                if(gridBoard[collumn][row] >= 0)
+                if(gridBoard[row][collumn] >= 0)
                 {
-                    gridBoard[Element[0]+pattern[0]][Element[1]+pattern[1]] += 1;
+                    gridBoard[row][collumn] += 1;
                 }
             }
         });
     });
 }
 
+//handle a cell click
 function detectClick(event)
 {
-    event.target.className = "cellTwo";
-    
+    if(gridBoard[event.target.dataset.row][event.target.dataset.column] >= 0)
+    {
+        cellElements[event.target.dataset.row][event.target.dataset.column].className = "cellTwo";
+    }
+    revealSurroundingCells(event.target);
 }
 
-
-function revealAll()
+//reveal surrounding cells
+function revealSurroundingCells(clickedCell)
 {
-    for(let i = 0; i < 10; i++)
+    surroundingPattern.forEach(pattern => 
     {
-        for(let j = 0; j < 10; j++)
+        let collumn = Number(clickedCell.dataset.column) + pattern[0];
+        let row = Number(clickedCell.dataset.row) + pattern[1];
+
+        revealCell(row,collumn);
+    });
+}
+
+//reveal a single cell
+function revealCell(row,collumn)
+{
+    if( collumn >= 0 && collumn < 10 && row >= 0 && row < 10 )
         {
-            if(gridBoard[j][i] >= 0)
+            if(gridBoard[row][collumn] === 0)
             {
-                let newCell = document.createElement("div");
-                newCell.className = "cellTwo";
-                newCell.style.gridColumn = i + 1;
-                newCell.style.gridRow = j + 1;
-                if(gridBoard[j][i] > 0)
-                {
-                    newCell.innerHTML = gridBoard[j][i];
-                }
-                board.appendChild(newCell);
+                cellElements[row][collumn].className = "cellTwo";
+                gridBoard[row][collumn] = -2;
+                revealSurroundingCells(cellElements[row][collumn]);
+            }
+            if(gridBoard[row][collumn] > 0)
+            {
+                cellElements[row][collumn].className = "cellTwo";
+                cellElements[row][collumn].innerHTML = gridBoard[row][collumn];
+                return;
+            }
+            if(gridBoard[row][collumn] < 0)
+            {
+                return;
             }
         }
-    }
 }
 
 
-intialize();
+
+intializeBoard();
 generateBombs();
-generateSurroundingNumbers();
-revealAll();
+calculateSurroundingNumbers();
 console.log(gridBoard);

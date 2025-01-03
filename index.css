@@ -35,3 +35,15 @@ body
     font-size: 70px;
     color: rgba(255, 255, 255);
 }
+
+.cellThree
+{   
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #863838;
+    font-size: 40px;
+    color: black;
+    border-radius: 40px;
+    font-weight: bold;
+}
