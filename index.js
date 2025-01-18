@@ -118,7 +118,7 @@ function detectClick(event)
         return;
     }
 
-    if(gridBoard[clickedCell.dataset.row][clickedCell.dataset.column] < 0 && cellElements[clickedCell.dataset.row][clickedCell.dataset.column].className)
+    if(gridBoard[clickedCell.dataset.row][clickedCell.dataset.column] < 0)
     {
         cellElements[clickedCell.dataset.row][clickedCell.dataset.column].className = "bomb";
         gameOver();
