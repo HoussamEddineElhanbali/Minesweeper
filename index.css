@@ -9,10 +9,13 @@ body
 
 button
 {
-    font-size: 20px;
+    font-size: 25px;
     margin-top: 1%;
     width: 150px;
     height: 50px;
+    border: solid 3px #4C585B;
+    background-color: #A5BFCC;
+    color: #ffffff;
 }
 
 .background
@@ -34,7 +37,7 @@ button
 {
     background-color: #A5BFCC;
     box-shadow: inset -6px -6px 0 rgba(0, 0, 0, 0.2),
-    inset 6px 6px 0 rgba(255, 255, 255);
+    inset 6px 6px 0 rgb(255, 255, 255);
     font-size: 70px;
 }
 

@@ -3,7 +3,7 @@
 const board = document.querySelector(".board");
 const restartButton = document.querySelector(".restart");
 let gridBoard = [];
-const difficulty = 10;
+const difficulty = 15;
 let bombs = [];
 let cellElements = [];
 const surroundingPattern = [
@@ -63,7 +63,7 @@ function generateBombs()
         }
         while(isBombDuplicated(bomb));
 
-        bombs.push([bomb[1],bomb[0]]);
+        bombs.push([bomb[0],bomb[1]]);
     }
 
     //adding bombs to the grid
@@ -71,6 +71,7 @@ function generateBombs()
     {
         gridBoard[Element[1]][Element[0]] = -1;
     });
+    console.log(bombs);
 }
 
 
@@ -204,3 +205,5 @@ function startGame()
 
 
 startGame();
+
+//i need to fix bombs that spawn one in top of other
