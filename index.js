@@ -205,5 +205,3 @@ function startGame()
 
 
 startGame();
-
-//i need to fix bombs that spawn one in top of other
