@@ -188,9 +188,9 @@ function gameOver()
         }
 }
 
-restartButton.addEventListener("click", restartGame);
+restartButton.addEventListener("click", startGame);
 
-function restartGame()
+function startGame()
 {
     board.replaceChildren();
     gridBoard = [];
@@ -203,7 +203,4 @@ function restartGame()
 }
 
 
-intializeBoard();
-generateBombs();
-calculateSurroundingNumbers();
-console.log(gridBoard);
+startGame();
