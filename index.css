@@ -1,13 +1,23 @@
 body
 {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     background-color: #F4EDD3;
 }
 
+button
+{
+    font-size: 20px;
+    margin-top: 1%;
+    width: 150px;
+    height: 50px;
+}
+
 .background
 {
+    margin-top: 2%;
     background-color: #4C585B;
     border: solid #4C585B 4px ;
 }
@@ -36,7 +46,7 @@ body
     color: rgba(255, 255, 255);
 }
 
-.cellThree
+.bomb
 {   
     display: flex;
     justify-content: center;

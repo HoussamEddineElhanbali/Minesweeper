@@ -1,11 +1,12 @@
 "use strict"
 
-let board = document.querySelector(".board");
+const board = document.querySelector(".board");
+const restartButton = document.querySelector(".restart");
 let gridBoard = [];
-let difficulty = 10;
+const difficulty = 10;
 let bombs = [];
 let cellElements = [];
-let surroundingPattern = [
+const surroundingPattern = [
     [-1,-1],[0,-1],[1,-1]
     ,[-1,0],        [1,0]
     ,[-1,1],[0,1],[1,1]
@@ -35,11 +36,11 @@ function intializeBoard()
         }
 
     //filling gridboard with 0
-    for(let i = 0; i < 10; i++)
+    for(let i = 0; i < difficulty; i++)
         {
             let collumn = [];
         
-            for(let j = 0; j < 10; j++)
+            for(let j = 0; j < difficulty; j++)
             {
                 collumn.push(0);
             }
@@ -109,11 +110,29 @@ function calculateSurroundingNumbers()
 //handle a cell click
 function detectClick(event)
 {
-    if(gridBoard[event.target.dataset.row][event.target.dataset.column] >= 0)
+    let clickedCell = event.target;
+
+    if(clickedCell.className !== "cell")
     {
-        cellElements[event.target.dataset.row][event.target.dataset.column].className = "cellTwo";
+        return;
     }
-    revealSurroundingCells(event.target);
+
+    if(gridBoard[clickedCell.dataset.row][clickedCell.dataset.column] < 0 && cellElements[clickedCell.dataset.row][clickedCell.dataset.column].className)
+    {
+        cellElements[clickedCell.dataset.row][clickedCell.dataset.column].className = "bomb";
+        gameOver();
+    }
+
+    if(gridBoard[clickedCell.dataset.row][clickedCell.dataset.column] >= 0)
+    {
+        cellElements[clickedCell.dataset.row][clickedCell.dataset.column].className = "cellTwo";
+
+        if(gridBoard[clickedCell.dataset.row][clickedCell.dataset.column] > 0)
+        {
+            cellElements[clickedCell.dataset.row][clickedCell.dataset.column].innerHTML = gridBoard[clickedCell.dataset.row][clickedCell.dataset.column];
+        }
+    }
+    revealSurroundingCells(clickedCell);
 }
 
 //reveal surrounding cells
@@ -136,7 +155,7 @@ function revealCell(row,collumn)
             if(gridBoard[row][collumn] === 0)
             {
                 cellElements[row][collumn].className = "cellTwo";
-                gridBoard[row][collumn] = -2;
+                gridBoard[row][collumn] = "#";
                 revealSurroundingCells(cellElements[row][collumn]);
             }
             if(gridBoard[row][collumn] > 0)
@@ -152,6 +171,36 @@ function revealCell(row,collumn)
         }
 }
 
+//fill the grid with # value to make the buttons unclickable
+function gameOver()
+{
+    gridBoard = [];
+    for(let i = 0; i < difficulty; i++)
+        {
+            let collumn = [];
+        
+            for(let j = 0; j < difficulty; j++)
+            {
+                collumn.push("#");
+            }
+        
+            gridBoard.push(collumn);
+        }
+}
+
+restartButton.addEventListener("click", restartGame);
+
+function restartGame()
+{
+    board.replaceChildren();
+    gridBoard = [];
+    bombs = [];
+    cellElements = [];
+    intializeBoard();
+    generateBombs();
+    calculateSurroundingNumbers();
+    console.log(gridBoard);
+}
 
 
 intializeBoard();
