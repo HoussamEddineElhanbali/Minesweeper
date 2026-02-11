@@ -1,0 +1,62 @@
+body
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #F4EDD3;
+}
+
+button
+{
+    font-size: 25px;
+    margin-top: 1%;
+    width: 150px;
+    height: 50px;
+    border: solid 3px #4C585B;
+    background-color: #A5BFCC;
+    color: #ffffff;
+}
+
+.background
+{
+    margin-top: 2%;
+    background-color: #4C585B;
+    border: solid #4C585B 4px ;
+}
+
+.board
+{
+    display: grid;
+    grid-template-columns: repeat(10,80px);
+    grid-template-rows: repeat(10,80px);
+    gap: 4px;
+}
+
+.cell
+{
+    background-color: #A5BFCC;
+    box-shadow: inset -6px -6px 0 rgba(0, 0, 0, 0.2),
+    inset 6px 6px 0 rgb(255, 255, 255);
+    font-size: 70px;
+}
+
+.cellTwo
+{   
+    background-color: #72848d;
+    text-align: center;
+    font-size: 70px;
+    color: rgba(255, 255, 255);
+}
+
+.bomb
+{   
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #863838;
+    font-size: 40px;
+    color: black;
+    border-radius: 40px;
+    font-weight: bold;
+}
